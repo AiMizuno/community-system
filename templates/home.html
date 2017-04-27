@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}首页{% endblock %}
+
+{% block content %}
+
+    <div class ="container">
+      <div class="page-header">
+        <br>
+        <h1>正在进行的活动</h1>
+      </div>
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <div class="item active">
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1492148852283&di=40c361669e4626d45c503564dbca8b96&imgtype=0&src=http%3A%2F%2Fi3.17173cdn.com%2F2fhnvk%2FYWxqaGBf%2Fcms3%2FMOAOLhblhnurmAj.jpg" alt="First slide">
+          </div>
+          <div class="item">
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1492149086388&di=2cb753ef4a3eacc7301fa3a5f7dccfa7&imgtype=0&src=http%3A%2F%2Fy3.ifengimg.com%2Fe7f199c1e0dbba14%2F2013%2F0527%2Frdn_51a2bd28d9c8c.jpg" alt="Second slide">
+          </div>
+          <div class="item">
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1492149121294&di=2ad83064ff43ea33af4593ac7efa0af4&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2Ff3d3572c11dfa9ec9ed2769362d0f703908fc1b1.jpg" alt="Third slide">
+          </div>
+        </div>
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+{% endblock %}
+
