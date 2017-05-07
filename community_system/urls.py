@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^logout/$', control_views.logout, name='logout'),
     url(r'^regist/$', control_views.regist, name="regist"),
     url(r'^home/$', control_views.home, name="home"),
+    url(r'^console/$', control_views.test, name="console"),
     url(r'^$', control_views.welcome, name="welcome"),
 ]

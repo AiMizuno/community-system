@@ -59,3 +59,6 @@ def home(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+def test(request):
+    return render(request,'console.html')
