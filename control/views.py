@@ -5,10 +5,12 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
-
-from .forms import RegistForm, LoginForm
+from .forms import RegistForm, LoginForm, NewActivityForm
 from .models import Person
+from .models import Activity, Community, Inform, Attend
+from django.template import RequestContext
 # Create your views here.
+
 
 def welcome(request):
     if request.user.is_authenticated:
@@ -28,7 +30,8 @@ def welcome(request):
         lf = LoginForm()
     return render(request,'welcome.html', { 'lf':lf, })
 
-def regist(request):
+
+def register(request):
     if request.method == 'POST':
 
         rf = RegistForm(request.POST)
@@ -50,15 +53,141 @@ def regist(request):
     return render(request,'regist.html', {'rf': rf, })
 
 
+def selfinfo(request):
+    user = request.user
+    return render(request, 'selfinfo.html', {'user':user})
+
+
 @login_required(login_url='/')
 def home(request):
     user = request.user
-    return render(request,'home.html', {'user': user, })
+    response = render_to_response('home.html', {'user':user})
+    response.set_cookie('username', user.name)
+    # return render(request, 'home.html', {'user': user})
+    return response
 
 @login_required(login_url="/")
 def logout(request):
     auth.logout(request)
     return redirect('/')
 
-def test(request):
-    return render(request,'console.html')
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+def affairs(request):
+    #dic = dict(), dic[activity], dic[username], dic[]
+    return render(request, 'affairs.html')
+
+
+def homepage(request):
+    return render(request, 'homepage.html')
+
+
+def create_activity(request, info = 'no'):
+    if info == 'add':
+        act_name = request.POST.get('name')
+        #根据cookie而非POST数据
+        username = request.COOKIES.get('username')
+        hoster = request.POST.get('hoster')
+        datetime = request.POST.get('datetime')
+        address = request.POST.get('address')
+        introduction = request.POST.get('introduction')
+
+        cmt = Community.objects.get(name=hoster)
+        author = Person.objects.get(name=username)
+        # if community is existing
+        if cmt:
+            newact = Activity.objects.get_or_create(community=cmt)[0] # 返回(object, False)
+            # save new activity
+            if author:
+                newact.author.add(author)
+            # add other info
+            newact.name = act_name
+            newact.address = address
+            newact.datetime = datetime
+            newact.introduction = introduction
+            newact.save()
+            return HttpResponse(u'添加成功')
+        else:
+            return HttpResponse(u'社团不存在')
+    else:
+        form = NewActivityForm(request.POST)
+    return render(request, 'create_activity.html', {'form': form})
+
+
+# _activity -> attend -> watch what I attend
+def watch_activity(request):
+    dic = {}
+    atys = Activity.objects.all()
+    dic['activities'] = atys
+    return render(request, '_activity.html', dic)
+
+
+def attend_activity(request, atyname):
+    username = request.user
+    #
+    user = Person.objects.filter(name=username)
+    activity = Activity.objects.filter(name=atyname)
+    if user:
+        user = user[0]
+    if activity:
+        activity = activity[0]
+    else:
+        return HttpResponse('Not exist such an activity')
+    attend = Attend(activity = activity, user=user)
+    attend.save()
+    return HttpResponse('attend success')
+
+from .forms import InformTable
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+def get_user(request):
+    userlist = Person.objects.all()
+    dic = {'userlist': userlist}
+    # watch userlist, which is made of name and its info
+    return render(request, 'user.html', dic)
+
+def send_inform(request, acceptor=None):
+    dic = {}
+    if acceptor:
+        # if it is the first time, a message is waiting to be finished
+        username = request.COOKIES.get('username')
+        acc = Person.objects.get(IDnum=acceptor)
+        form = InformTable()
+        dic['form'], dic['acceptor'] = form, acc
+        return render(request, 'send_inform.html', dic)
+    # the second time, add an inform to the database
+    elif request.method == 'POST':
+        inform = InformTable(request.POST)
+        if inform.is_valid():
+            username = inform.cleaned_data["sender"]
+            sender = Person.objects.get(name=username)
+            content = inform.cleaned_data["content"]
+            acceptor = inform.cleaned_data["acceptor"]
+            acc = Person.objects.get(IDnum=acceptor)
+            newinform = Inform.objects.get_or_create(sender=sender, acceptor=acc, content=content)[0]
+            newinform.save()
+            return redirect('/watch_inform')
+        else:
+            return HttpResponse('Invalid POST')
+    return HttpResponse('Method isn\'t POST')
+
+
+def watch_inform(request):
+    username = request.user
+    user = Person.objects.get(name=username)
+    dic = {}
+    # 我发出的inform和我收到的inform
+    if user:
+        get_informs = Inform.objects.filter(acceptor=user)
+        send_informs = Inform.objects.filter(sender=user)
+        dic['gets'] = get_informs
+        dic['sends'] = send_informs
+        return render(request, 'informs.html', dic)
+    return HttpResponse('Error')
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+def remove_activity(activity_id):
+    Activity.objects.remove(activity_id=activity_id)
+
+
+def remove_inform(community_id):
+    Inform.objects.remove(community_id=community_id)
