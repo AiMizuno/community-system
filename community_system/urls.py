@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^infos$', control_views.selfinfo, name="selfinfo"),
     # 社团活动, 主页
     url(r'^affairs$', control_views.affairs, name='affairs'),
-    url(r'homepage$', control_views.homepage, 'homepage'),
+    url(r'homepage$', control_views.homepage, name='homepage'),
     url(r'^create_activity$', control_views.create_activity, name="create_activity"),
     url(r'^create_activity/(.{3})$', control_views.create_activity, name="create_activity"),
     url(r'^get_user/?$', control_views.get_user, name="get_user"),

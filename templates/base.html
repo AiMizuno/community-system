@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,19 +16,33 @@
     <!--[if lt IE 9]>
       <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
       <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+
     <![endif]-->
-  </head>
-  <body>
-  {% include 'nav.html' %}
-  <div class="page-header">
-      <br>
-  </div>
+</head>
+<body>
+{% include 'nav.html' %}
+<div class="page-header">
+    <br>
+</div>
 
-  {% block content %}
-      <div>这里是默认内容，所有继承自这个模板的，如果不覆盖就显示这里的默认内容。</div>
-  {% endblock %}
+{% block content %}
+    <div>这里是默认内容，所有继承自这个模板的，如果不覆盖就显示这里的默认内容。</div>
+{% endblock %}
 
-  <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="../static/js/flat-ui.min.js"></script>
-  </body>
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+        $("#activity").click(function(){
+            $(".activity").show();
+            $(".inform").hide();
+        });
+        $("#inform").click(function(){
+            $(".activity").hide();
+            $(".inform").show();
+        });
+    });
+</script>
+<script src="../static/js/flat-ui.min.js"></script>
+</body>
 </html>

@@ -5,10 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-    <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ rf.as_p }}
-         <button type="submit" name="regist" class="btn btn-default">注册</button>
-    </form>
+<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ rf.as_p }}
+    <button type="submit" name="regist" class="btn btn-default">注册</button>
+</form>
 </body>
 </html>
