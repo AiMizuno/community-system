@@ -62,7 +62,7 @@ def selfinfo(request):
 def home(request):
     user = request.user
     response = render_to_response('home.html', {'user':user})
-    response.set_cookie('username', user.name)
+    response.set_cookie('username', user)
     # return render(request, 'home.html', {'user': user})
     return response
 
