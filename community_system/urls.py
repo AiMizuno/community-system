@@ -31,11 +31,17 @@ urlpatterns = [
     url(r'^create_activity/(.{3})$', control_views.create_activity, name="create_activity"),
     url(r'^get_user/?$', control_views.get_user, name="get_user"),
     #社团管理页面（测试内容）
+    url(r'^console/activity', control_views.console_activity, name="console_activity"),
+    url(r'^console/member', control_views.console_member, name="console_member"),
+    url(r'^console/article', control_views.console_article, name="console_article"),
+    url(r'^console/inform', control_views.console_inform, name="console_inform"),
     url(r'^console/$', control_views.console, name="console"),
+
+
     #通知
     url(r'^send_inform/([0-9a-zA-Z]+)/?$', control_views.send_inform, name="send_inform"),
     url(r'^send_inform/?$', control_views.send_inform, name="send_inform"),
     url(r'^watch_inform/?$', control_views.watch_inform, name="watch_inform"),
-    url('^activity/?$', control_views.watch_activity),
+    url('^activity/?$', control_views.watch_activity, name="watch_activity"),
     url('^attend_activity/(.*?)/?$', control_views.attend_activity),
 ]

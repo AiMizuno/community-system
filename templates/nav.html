@@ -11,7 +11,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="#">找社团</a></li>
-            <li ><a href="#">活动</a></li>
+            <li ><a href={% url 'watch_activity' %}>活动</a></li>
+            <li ><a href={% url 'get_user' %}>找小伙伴</a></li>
         </ul>
         <form class="navbar-form navbar-left" action="#" role="search">
             <div class="form-group">

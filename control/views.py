@@ -114,7 +114,7 @@ def create_activity(request, info = 'no'):
 
 
 # _activity -> attend -> watch what I attend
-def watch_activity(request):
+def watch_activity(request): #在主页获取
     dic = {}
     atys = Activity.objects.all()
     dic['activities'] = atys
@@ -139,13 +139,13 @@ def attend_activity(request, atyname):
 from .forms import InformTable
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def get_user(request):
+def get_user(request): #看小伙伴
     userlist = Person.objects.all()
     dic = {'userlist': userlist}
     # watch userlist, which is made of name and its info
     return render(request, 'user.html', dic)
 
-def send_inform(request, acceptor=None):
+def send_inform(request, acceptor=None): #成员/发通知
     dic = {}
     if acceptor:
         # if it is the first time, a message is waiting to be finished
@@ -171,7 +171,7 @@ def send_inform(request, acceptor=None):
     return HttpResponse('Method isn\'t POST')
 
 
-def watch_inform(request):
+def watch_inform(request):#导航栏的消息
     username = request.user
     user = Person.objects.get(name=username)
     dic = {}
@@ -195,3 +195,11 @@ def remove_inform(community_id):
 #这是测试的内容
 def console(request):
     return render(request, 'console.html')
+def console_activity(request):
+    return render(request, 'console_activity.html')
+def console_article(request):
+    return render(request, 'console_article.html')
+def console_inform(request):
+    return render(request, 'console_inform.html')
+def console_member(request):
+    return render(request, 'console_member.html')

@@ -32,6 +32,8 @@ class Notice(models.Model):
     create_time = models.DateField(null=True, blank = True)
     def __unicode__(self):
         return self.content
+    def __str__(self):
+        return self.content
 
 
 class Passage(models.Model):

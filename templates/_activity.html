@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}个人中心{% endblock %}
+{% block title %}活动{% endblock %}
 
 {% block content %}
     <div class="col-md-8 col-md-offset-2">
         <div class="thumbnail">
-            <h4>我的消息</h4>
-            {% for i in gets %}
-                <p>{{ i.content }}</p><hr>
+            <h5>正在进行的活动</h5>
+            {% for i in activities %}
+                <p>{{ i.name }} —— {{ i.community }}</p><hr>
             {% endfor %}
         </div>
     </div>
 {% endblock %}
-
