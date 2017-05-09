@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^create_activity$', control_views.create_activity, name="create_activity"),
     url(r'^create_activity/(.{3})$', control_views.create_activity, name="create_activity"),
     url(r'^get_user/?$', control_views.get_user, name="get_user"),
+    #社团管理页面（测试内容）
+    url(r'^console/$', control_views.console, name="console"),
     #通知
     url(r'^send_inform/([0-9a-zA-Z]+)/?$', control_views.send_inform, name="send_inform"),
     url(r'^send_inform/?$', control_views.send_inform, name="send_inform"),

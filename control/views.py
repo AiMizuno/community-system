@@ -191,3 +191,7 @@ def remove_activity(activity_id):
 
 def remove_inform(community_id):
     Inform.objects.remove(community_id=community_id)
+
+#这是测试的内容
+def console(request):
+    return render(request, 'console.html')
